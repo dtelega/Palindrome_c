@@ -56,7 +56,7 @@ int		main(void)
 			a = 99999;
 			while (a >= 10000)
 			{
-				if (is_prime(a))
+				if (is_prime(a) && !(res % a))
 				{
 					b = res / a;
 					if (is_prime(b) && len(b) == 5)
