@@ -1,18 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int			is_palindrom(long long int abc)
+int		is_pal(long long int abc)
 {
-	long long int	cba;
-	long long int	n;
+	long long int cba;
+	long long int copy;
 
 	cba = 0;
-	n = abc;
-	while (n)
+	copy = abc;
+	while (abc)
 	{
-		cba = cba * 10 + n % 10;
-		n /= 10;
+		cba = cba * 10 + abc%10;
+		abc /= 10;
 	}
-	if (abc == cba)
+	if (copy == cba)
 		return (1);
 	return (0);
 }
@@ -20,9 +21,11 @@ int			is_palindrom(long long int abc)
 int			is_prime(int n)
 {
 	int	i;
+	int	s;
 
+	s = n;
 	i = 2;
-	while (i < n/2)
+	while (i < n/2)	
 	{
 		if (n%i == 0)
 			return (0);
@@ -31,44 +34,52 @@ int			is_prime(int n)
     return 1;
 }
 
-int		len(int	nb)
-{
-	int	len;
-
-	len = 1;
-	while (nb /= 10)
-		len++;
-	return (len);
-}
-
 int		main(void)
 {
+	int				a;
+	int				b;
 	long long int	res;
-	long long int	a;
-	long long int	b;
+	long long int	pal;
+	int				*tab;
+	int				copy_a;
+	int				copy_b;
 
-	res = 9999999999;
 
-	while (res)
+	tab = (int *)malloc(100001 * sizeof(tab));
+	a = 0;
+	while (a <= 100000)
 	{
-		if (is_palindrom(res))
+		if (is_prime(a))
+			tab[a] = 1;
+		else
+			tab[a] = 0;	
+		a++;
+	}
+	a = 99999;
+	res = 0;
+	while (a >= 10000)
+	{
+		if (tab[a])
 		{
-			a = 99999;
-			while (a >= 10000)
+			b = 99999;
+			while (b >= 10000)
 			{
-				if (is_prime(a))
+				if (tab[b])
 				{
-					b = res / a;
-					if (is_prime(b) && len(b) == 5)
+					pal = (long long int)a * (long long int)b;
+					if (is_pal(pal) && pal > res)
 					{
-						printf("Result: %lld\n%lld * %lld\n", res, a, b);
-						return (1);
+						res = pal;
+						copy_a = a;
+						copy_b = b;
 					}
 				}
-				a--;
+				b--;
 			}
 		}
-		res--;
+		a--;
 	}
+	free(tab);
+	printf("%d x %d = %lld\n", copy_a,copy_b,res);
 	return (0);
 }
