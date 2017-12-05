@@ -64,7 +64,11 @@ int		main(void)
 			b = 99999;
 			while (b >= 10000)
 			{
+<<<<<<< HEAD
 				if (tab[b])
+=======
+				if (is_prime(a) && !(res % a))
+>>>>>>> 4cf9dce5e3eea83501da0e0e9bb8900ba3c519de
 				{
 					pal = (long long int)a * (long long int)b;
 					if (is_pal(pal) && pal > res)
