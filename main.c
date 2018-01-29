@@ -10,34 +10,22 @@ int		is_pal(long long int abc)
 	copy = abc;
 	while (abc)
 	{
-		cba = cba * 10 + abc%10;
+		cba = cba * 10 + abc % 10;
 		abc /= 10;
 	}
-	if (copy == cba)
-		return (1);
-	return (0);
+	return (copy == cba) ? 1 : 0;
 }
 
 int			is_prime(int n)
 {
-	int	i;
-	int	s;
-
-	s = n;
-	i = 2;
-	while (i < n/2)	
-	{
-		if (n%i == 0)
+	for (int i = 2; i < n / 2; i++)
+		if (n % i == 0)
 			return (0);
-		i++;
-	}
     return 1;
 }
 
 int		main(void)
 {
-	int				a;
-	int				b;
 	long long int	res;
 	long long int	pal;
 	int				*tab;
@@ -46,24 +34,12 @@ int		main(void)
 
 
 	tab = (int *)malloc(100001 * sizeof(tab));
-	a = 0;
-	while (a <= 100000)
-	{
-		if (is_prime(a))
-			tab[a] = 1;
-		else
-			tab[a] = 0;	
-		a++;
-	}
-	a = 99999;
+	for (int a = 10000; a < 100000; a++)
+		is_prime(a) ? (tab[a] = 1) : (tab[a] = 0);
 	res = 0;
-	while (a >= 10000)
-	{
+	for (int a = 99999; a > 9999; a--)
 		if (tab[a])
-		{
-			b = 99999;
-			while (b >= 10000)
-			{
+			for (int b = 99999; b > 9999; b--)
 				if (tab[b])
 				{
 					pal = (long long int)a * (long long int)b;
@@ -72,13 +48,8 @@ int		main(void)
 						res = pal;
 						copy_a = a;
 						copy_b = b;
-					}
+					}	
 				}
-				b--;
-			}
-		}
-		a--;
-	}
 	free(tab);
 	printf("%d x %d = %lld\n", copy_a,copy_b,res);
 	return (0);
